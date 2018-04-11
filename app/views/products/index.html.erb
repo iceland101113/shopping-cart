@@ -1,1 +1,31 @@
-<h1>購物網前台</h1>
+<div class="container">
+  <h1>購物網前台</h1>
+  <div class="row">
+
+    <div class="col-md-10">
+
+          <% @products.each do |product| %>
+          <div class="col-sm-12 col- col-md-2">
+            <div>
+              <%= image_tag product.image, class: "img-responsive center-block" %>
+              <div class="caption">
+                <h4><%= link_to product.name, product_path(product) %></h4>
+                <p><%= truncate(product.description, length: 40) %></p>
+                <button class="button">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        
+      <!-- 有generate kaminari paginate bootstrap style -->
+
+    </div>
+
+    <div class="col-md-2">
+    </div>
+
+  </div>
+    <div class="text-center">
+      <%= paginate @products %>
+    </div>
+</div>

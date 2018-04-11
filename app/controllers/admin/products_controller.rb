@@ -4,7 +4,7 @@ class Admin::ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = Product.all
+    @products = Product.page(params[:page]).per(10)
   end
 
   def new
@@ -51,7 +51,7 @@ private
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price)
+    params.require(:product).permit(:name, :description, :price, :image)
   end
 
 end

@@ -1,12 +1,44 @@
-<h1>購物網後台</h1>
-<ul>
-  <% @products.each do |product| %>
-  <li>
-    <%= product.name %>
-    <%= link_to 'Show', admin_product_path(product) %>
-    <%= link_to 'Edit', edit_admin_product_path(product) %>
-    <%= link_to 'Delete', admin_product_path(product), method: :delete, data: {confirm:"Are you sure?"} %>
-  </li>
-  <% end %>
-</ul>
-<%= link_to 'New Product', new_admin_product_path %>
+<div class="container">
+  <div class="row">
+    <h1>購物網後台</h1>
+    
+    <div >
+      <%= link_to 'New Product', new_admin_product_path, class: "btn btn-primary" %>
+    </div>
+    <br>
+
+    <div class="col-md-12">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= image_tag product.image, class: "img-responsive center-block product-img" %></td>
+          <td><%= product.price %>$</td>
+          <td>
+            <%= link_to 'Show', admin_product_path(product) %>
+            <%= link_to 'Edit', edit_admin_product_path(product) %>
+            <%= link_to 'Delete', admin_product_path(product), method: :delete, data: {confirm:"Are you sure?"} %>
+          </td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="text-center">
+      <%= paginate @products %>
+    </div>
+    
+  </div>
+
+  
+</div>
