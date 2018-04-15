@@ -28,6 +28,9 @@
           <h4>Cart(0)</h4>
         </div>
         <hr>
+        <div id="cart_tol_p">
+          <h4>Total: 0$</h4>
+        </div>
       </div>
     </div>
 
@@ -51,9 +54,59 @@
       console.log("成功");
       console.log(data["cart_product_image"])
       $("#cart_tol").html("<h4>Cart(" + data["cart_tol"] + ")</h4>")
-      $("#cart").append("<img src="+ data["cart_product_image"] +" class='img-responsive center-block'>"+"<p>"+ data["cart_product_name"] +"</p><p>"+ data["cart_product_price"] +"$</p>");
+      $("#cart_tol_p").html("<h4>Total:" + data["cart_tol_m"] + "$</h4>")
+      $("#cart").append("<img src="+ data["cart_product_image"] +" class='img-responsive center-block'>"+"<p>"+ data["cart_product_name"] +"</p><p>"+ data["cart_product_price"] +"$</p><div id='count" + data["cartitem_id"] + "'><button onclick='decres_quantity()' class='button'>-</button><input type='text' min='1' style='width: 3em' value='1'><button onclick='incres_quantity()' class='button'>+</button></div>");
 
       }
+    });
+
+  }
+
+  function decres_quantity() {
+    var count_id = event.target.parentNode.id;
+    var count = $("#" + count_id).find("input").val();
+    var p_id = count_id.substr(5);
+    console.log(p_id);
+    if (count > 1) {
+      count = Number(count)-1;
+      $("#" + count_id).find("input").val(count);
+    }
+
+    $.ajax({
+      url: "de_quantity/",
+      method: "GET",
+      datatype: "json",
+      data: {
+        id: p_id,
+        quantity: count
+      },
+      success: function(dq_data){
+        $("#cart_tol_p").html("<h4>Total:" + dq_data["cart_tol_m"] + "$</h4>");
+      }
+
+    });
+  }
+
+  function incres_quantity() {
+    var count_id = event.target.parentNode.id;
+    var count = $("#" + count_id).find("input").val();
+    var p_id = count_id.substr(5);
+    console.log(p_id);
+    count = Number(count) + 1;
+    $("#" + count_id).find("input").val(count);
+
+    $.ajax({
+      url: "in_quantity/",
+      method: "GET",
+      datatype: "json",
+      data: {
+          id: p_id,
+          quantity: count
+      },
+      success: function(iq_data){
+        $("#cart_tol_p").html("<h4>Total:" + iq_data["cart_tol_m"] + "$</h4>");
+      }
+
     });
 
   }
