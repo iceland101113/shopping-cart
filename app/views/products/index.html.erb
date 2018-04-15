@@ -24,6 +24,10 @@
 
     <div class="col-md-2">
       <div id="cart">
+        <div id="cart_tol">
+          <h4>Cart(0)</h4>
+        </div>
+        <hr>
       </div>
     </div>
 
@@ -32,7 +36,7 @@
       <%= paginate @products %>
     </div>
 </div>
-<script>
+<script type="text/javascript">
   function add_to_cart() {
     var id = event.target.parentNode.parentNode.id;
     $.ajax({
@@ -45,7 +49,9 @@
       success: function(data){
       console.log(data);
       console.log("成功");
-      $("#cart").append("<h4><%= @cart_product.name %></h4>");
+      console.log(data["cart_product_image"])
+      $("#cart_tol").html("<h4>Cart(" + data["cart_tol"] + ")</h4>")
+      $("#cart").append("<img src="+ data["cart_product_image"] +" class='img-responsive center-block'>"+"<p>"+ data["cart_product_name"] +"</p><p>"+ data["cart_product_price"] +"$</p>");
 
       }
     });
