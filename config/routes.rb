@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root "products#index"
 
+  get "addto_cart", to: "products#addto_cart" 
+
   namespace :admin do
     resources :products
     root "products#index"
