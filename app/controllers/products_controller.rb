@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Product.page(params[:page]).per(10)
+    @products = Product.page(params[:page]).per(12)
     @cart = Cart.create(number: "1")
     @cart_product = Product.new
   end

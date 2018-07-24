@@ -1,12 +1,13 @@
 <div class="container">
-  <h1>購物網前台</h1>
+  <h1>All Products</h1>
+  <br>
   <div class="row">
 
     <div class="col-md-10" style="border-right: 1px solid grey;">
 
           <% @products.each do |product| %>
-          <div class="col-sm-12 col- col-md-2">
-            <div id="<%= product.id %>" >
+          <div class="col-sm-4 col-md-2">
+            <div class='product-item' id="<%= product.id %>" >
               <%= image_tag product.image, class: "img-responsive center-block" %>
               <div class="caption">
                 <h4><%= link_to product.name, product_path(product) %></h4>
