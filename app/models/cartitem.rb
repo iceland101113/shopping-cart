@@ -1,9 +1,10 @@
 class Cartitem < ApplicationRecord
-  belongs_to :cart, dependent: :destroy 
-  belongs_to :product, dependent: :destroy 
+  belongs_to :cart 
+  belongs_to :product 
 
-  def total_m
+  def total_money
     self.total_m = self.product.price*self.quantity
     self.save
+    self.total_m
   end
 end

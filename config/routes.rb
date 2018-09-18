@@ -1,7 +1,20 @@
 Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :products, only: [:index, :show]
+  resources :products, only: [:index, :show] do
+
+    post :add_to_cart, on: :member
+
+  end
+
+  resources :orders
+
+  resource :cart
+
+  resources :cartitems, only: [:update, :destroy] 
+
+  # get "addtocart", to: "products#addtocart" 
+
 
   root "products#index"
 

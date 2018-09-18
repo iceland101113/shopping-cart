@@ -1,115 +1,53 @@
 <div class="container">
-  <h1>All Products</h1>
   <br>
   <div class="row">
 
-    <div class="col-md-10" style="border-right: 1px solid grey;">
+    <div class="col-md-10" style="border-right: 2px solid grey;">
 
           <% @products.each do |product| %>
           <div class="col-sm-4 col-md-2">
-            <div class='product-item' id="<%= product.id %>" >
-              <%= image_tag product.image, class: "img-responsive center-block" %>
-              <div class="caption">
+            <div class='product-item'>
+              <div class="po-info1">
+                <%= image_tag product.image, class: "img-responsive center-block" %>             
                 <h4><%= link_to product.name, product_path(product) %></h4>
                 <p><%= truncate(product.description, length: 40) %></p>
-                <p><%= product.price %>$</p>
-                <button onclick="add_to_cart()" class="button">Add to Cart</button>
               </div>
+              <div class="po-info2">
+                <p><%= product.price %>$</p>
+                <%= link_to 'Add to Cart', add_to_cart_product_path(product), class: "btn btn-primary", remote: true, method: :post %>
+              </div> 
             </div>
           </div>
         <% end %>
         
       <!-- 有generate kaminari paginate bootstrap style -->
+      <div class="text-center">
+        <%= paginate @products %>
+      </div>
 
     </div>
 
     <div class="col-md-2">
       <div id="cart">
-        <div id="cart_tol">
-          <h4>Cart(0)</h4>
-        </div>
-        <hr>
-        <div id="cart_tol_p">
-          <h4>Total: 0$</h4>
-        </div>
+        <% if current_cart.cartitems.size == 0 %>
+            <div id="cart">
+              <div id="cart_tol">
+                <h4>Cart(0)</h4>
+              </div>
+              <hr>
+              <div id="cart_tol_p">
+                <h4>Total: 0$</h4>
+              </div>
+        <% else %>
+          <%= render partial: "shared/cart" %>
+        <% end %>
       </div>
     </div>
 
   </div>
-    <div class="text-center">
-      <%= paginate @products %>
-    </div>
+ 
 </div>
 <script type="text/javascript">
-  function add_to_cart() {
-    var id = event.target.parentNode.parentNode.id;
-    $.ajax({
-      url: "addto_cart/",
-      method: "GET",
-      datatype: "json",
-      data: {
-        product_id: id
-      },
-      success: function(data){
-      console.log(data);
-      console.log("成功");
-      console.log(data["cart_product_image"])
-      $("#cart_tol").html("<h4>Cart(" + data["cart_tol"] + ")</h4>")
-      $("#cart_tol_p").html("<h4>Total:" + data["cart_tol_m"] + "$</h4>")
-      $("#cart").append("<img src="+ data["cart_product_image"] +" class='img-responsive center-block'>"+"<p>"+ data["cart_product_name"] +"</p><p>"+ data["cart_product_price"] +"$</p><div id='count" + data["cartitem_id"] + "'><button onclick='decres_quantity()' class='button'>-</button><input type='text' min='1' style='width: 3em' value='1'><button onclick='incres_quantity()' class='button'>+</button></div>");
 
-      }
-    });
-
-  }
-
-  function decres_quantity() {
-    var count_id = event.target.parentNode.id;
-    var count = $("#" + count_id).find("input").val();
-    var p_id = count_id.substr(5);
-    console.log(p_id);
-    if (count > 1) {
-      count = Number(count)-1;
-      $("#" + count_id).find("input").val(count);
-    }
-
-    $.ajax({
-      url: "de_quantity/",
-      method: "GET",
-      datatype: "json",
-      data: {
-        id: p_id,
-        quantity: count
-      },
-      success: function(dq_data){
-        $("#cart_tol_p").html("<h4>Total:" + dq_data["cart_tol_m"] + "$</h4>");
-      }
-
-    });
-  }
-
-  function incres_quantity() {
-    var count_id = event.target.parentNode.id;
-    var count = $("#" + count_id).find("input").val();
-    var p_id = count_id.substr(5);
-    console.log(p_id);
-    count = Number(count) + 1;
-    $("#" + count_id).find("input").val(count);
-
-    $.ajax({
-      url: "in_quantity/",
-      method: "GET",
-      datatype: "json",
-      data: {
-          id: p_id,
-          quantity: count
-      },
-      success: function(iq_data){
-        $("#cart_tol_p").html("<h4>Total:" + iq_data["cart_tol_m"] + "$</h4>");
-      }
-
-    });
-
-  }
 
 </script>
