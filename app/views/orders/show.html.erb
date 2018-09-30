@@ -1,1 +1,36 @@
-訂單！！
+<div class="container">
+  <%= link_to 'Back', products_path, class: "btn btn-primary" %>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Order List</h2>
+      <div>
+        <%= render partial: "shared/order" %>
+      </div>
+      <h2>Shipping List</h2>
+        <table class="table table-striped ">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Name</td>
+            <td><%= @order.user.email %></td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td><%= @order.phone %></td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td><%= @order.address %></td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+</div>

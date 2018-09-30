@@ -1,9 +1,10 @@
 <div class="container">
   <div class="row">
-    <h1>購物網後台</h1>
-    
+    <%= link_to 'Product', admin_products_path, class: "btn btn-primary" %> | <%= link_to 'Order', admin_orders_path, class: "btn btn-primary" %>
+    <br>
+    <br>
     <div >
-      <%= link_to 'New Product', new_admin_product_path, class: "btn btn-primary" %>
+      <%= link_to 'New Product', new_admin_product_path, class: "btn btn-default" %>
     </div>
     <br>
 

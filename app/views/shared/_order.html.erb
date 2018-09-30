@@ -1,0 +1,23 @@
+<table class="table table-striped ">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @order.orderitems.each do |item| %>
+  <tr>
+    <td><%= item.product.name %></td>
+    <td><%= item.quantity %></td>
+    <td><%= item.price %>$</td>
+  </tr>
+  <% end %>
+  <tr>
+    <td><strong>Subtotal</strong></td>
+    <td></td>
+    <td><%= @order.total_price %>$</td>
+  </tr>
+  </tbody>
+</table>
