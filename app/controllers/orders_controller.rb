@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
 before_action :authenticate_user!
 
+  def index
+    @orders = current_user.orders.page(params[:page]).per(10)
+  end
+
   def create
     @order = Order.new(order_params)
     @order.user_id = current_user.id
